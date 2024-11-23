@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+
+    }
+
+    .flex {}
+
+
+
+    .flex2 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body {}
+
+
+    .secondContainer {
+
+      display: flex;
+      justify-content: space-evenly;
+
+    }
+
+
+
+
+    .dialogbox {
+      width: 60%;
+      height: 20%;
+      margin: auto;
+      margin-left: 20%;
+      background-color: bisque;
+      position: fixed;
+      top: 0;
+      z-index: 10;
+      box-shadow: 5px 10px #888888;
+      color: rgb(221, 162, 139);
+      font-size: xxx-large;
+      font-weight: 600;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+
+    .abcdef {
+      width: 18rem;
+      position: relative;
+
+      box-shadow: 2px 2px 5px #504e4e83;
+      background-color: rgb(255, 255, 255);
+      padding: 0;
+    }
+
+    .carouselClass {
+      margin-bottom: 20px;
+
+
+
+    }
+
+
+    .card-img-top {
+      height: 15rem;
+    }
+
+    .w {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    .myimg {
+      height: 95vh;
+      width: 100vw;
+    }
+
+    .Imageresize {
+      height: 360px;
+      width: 600px;
+    }
+
+    .cardshadow {
+      padding: 10px;
+      box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      background-image: radial-gradient(circle 311px at 8.6% 27.9%, rgba(62, 147, 252, 0.57) 12.9%, rgba(239, 183, 192, 0.44) 91.2%);
+    }
+
+    .parentDiv {
+      background: #0F2027;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+
+    #dataContainer {
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      background: #0F2027;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+
+    #dataContainerRow {
+      width: 79%;
+      margin: auto;
+      display: flex;
+      justify-content: space-evenly;
+
+
+    }
+  </style>
+
+  <script>
+    const EMAIL = `{{email}}`
+    console.log(EMAIL)
+
+    const addblog_wala_page = document.querySelector('#addblogwala_page')
+    const showBlog = document.getElementById('IDshow_blogs')
+
+
+
+
+    function addblogwala_page_clicked(EMAIL) {
+      return function (event) {
+
+        // Navigate to the new page with additional details
+        window.location.href = `/blogadd?email=${EMAIL}`;
+
+
+      };
+
+    }
+
+    function showBlogClicked(EMAIL) {
+      return function (event) {
+
+        // Navigate to the new page with additional details
+        window.location.href = `/AllBlogs?email=${EMAIL}`;
+
+
+      };
+
+    }
+
+    addblog_wala_page.addEventListener('click', addblogwala_page_clicked(EMAIL))
+    showBlog.addEventListener('click', showBlogClicked(EMAIL))
+
+
+    const getstatedata = async () => {
+      let response = await fetch('/getCardBlogs')
+      let result = await response.json()
+      var one = true
+      console.log(result.cardtitle)
+      console.log(result)
+      const cardContainer = document.getElementById('cardHolder');
+      const dataContainer = document.getElementById('dataContainer');
+      const dataContainerRow = document.getElementById('dataContainerRow')
+
+
+      result.forEach(item => {
+
+
+
+        const blog = document.createElement('div');
+        blog.innerHTML = `
+   <div class="card mb-3 cardshadow" style="width: 80% ; height : 400px; margin : 40px auto" ;  >
+    <div class="row g-0">
+     
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">${item.cardtitle}</h5>
+          <p class="card-text">${item.desc}</p>
+          
+        </div>
+      </div>
+       <div class="col-md-4">
+        <img src="${item.image}" class="img-fluid rounded-start Imageresize" alt="...">
+      </div>
+    </div>
+    </div> 
+     `;
+
+        const item_two = document.createElement('div');
+        item_two.innerHTML = `
+   <div class="card mb-3 cardshadow" style="width: 80% ; height : 400px; margin : 40px auto "; >
+    <div class="row g-0">
+    
+       <div class="col-md-4">
+        <img src="${item.image}" class="img-fluid rounded-start Imageresize" alt="...">
+      </div>
+
+       <div class="col-md-8" style = "overflow-y : hidden;">
+        <div class="card-body"  style = "overflow-y : hidden;">
+          <h5 class="card-title">${item.cardtitle}</h5> 
+          <p class="card-text" style = "overflow-y : hidden;">${item.desc}</p>
+          
+        </div>
+      </div>
+    </div>
+    </div> 
+     `;
+
+        if (one == true) { cardContainer.append(blog); one = false; }
+        else {
+          cardContainer.append(item_two)
+          one = true
+        }
+
+
+      })
+    }
+
+
+    const getcitydata = async () => {
+      let response = await fetch('/getCitycard')
+      let result = await response.json()
+      console.log(result)
+
+
+      result.forEach(item => {
+        console.log(item.citytitle)
+        const city = document.createElement('div');
+        city.style.width = "18rem";
+        city.style.padding = "0"
+        city.style.margin = "0 10% 10% 0"
+
+
+        city.innerHTML = `
+      <div class="card " style="width: 18rem;">
+      <img style="margin-top : 10px;" src="${item.image}" class="card-img-top" alt="...">
+      <div class="card-body">
+      <h5 class="card-title">${item.citytitle}</h5>
+    
+      <a href="#" >Know More...</a>
+      </div>
+      </div>
+     `;
+        dataContainerRow.append(city)
+      })
+
+    }
+
+    dataContainer.append(dataContainerRow)
+
+
+
+
+    getstatedata()
+    getcitydata()
+    const showBlog = document.getElementById('IDshow_blogs')
+    showBlog.addEventListener('click', showBlogClicked())
+
+
+
+  </script>
+
+</head>
+
+
+<body>
+
+  <nav class="navbar navbar-dark bg-dark  navbar-expand-lg mynav  border-bottom border-body">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">My Blog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <div class="nav-link" id="addblogwala_page"> Add blog </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/AllBlogs?email="> Show Blogs
+      </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+      </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+    </div>
+  </nav>
+
+
+
+  <div id="carouselExampleCaptions" class="carousel slide ">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="myimg"
+          src="https://plus.unsplash.com/premium_photo-1661962660197-6c2430fb49a6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          class="d-block w-100 image-fluid" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>First slide label</h5>
+          <p>Some representative placeholder content for the first slide.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="myimg"
+          src="https://images.unsplash.com/photo-1682685794761-c8e7b2347702?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Second slide label</h5>
+          <p>Some representative placeholder content for the second slide.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="myimg"
+          src="https://images.unsplash.com/photo-1605558162119-2de4d9ff8130?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Third slide label</h5>
+          <p>Some representative placeholder content for the third slide.</p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <div class="parentDiv" style="padding:30px;">
+    <div id="cardHolder">
+
+    </div>
+  </div>
+
+  <div id="dataContainer" class="container-fluid" style="padding-right: 0; ">
+    <div id="dataContainerRow" class="secondContainer row" style="margin: 0 0;  ">
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+
+
+
+</body>
+
+</html>

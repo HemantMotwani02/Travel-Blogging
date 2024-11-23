@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 80vw;
+            height: 100vh;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text {
+            width: 400px;
+            height: 400px;
+            word-wrap: break-word;
+            color: rgb(54, 52, 52);
+        }
+        .headingtext{
+             color: whitesmoke;
+        }
+
+        .gap {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dataContainer"></div>
+    <script>
+
+        //   const getdata = async () => {
+        //   let response = await fetch('/getdata')
+        //   let result = await response.json()
+
+        const getid = `{{id}}`
+        const getdata = async (_id) => {
+            const url = `/showdata?id=${_id}`
+            let response = await fetch(url)
+            let result = await response.json()
+            console.log(result)
+            const dataContainer = document.getElementById('dataContainer');
+            const div = document.createElement(`div`);
+            div.classList.add('imgdiv')
+            div.classList.add('gap')
+            const sou = document.createElement('h1');
+            sou.textContent = "Statue of Unity"
+            sou.classList.add('headingtext')
+            div.appendChild(sou);
+            const img = document.createElement('img');
+            img.src = 'https://picsum.photos/seed/picsum/400/400';
+            div.appendChild(img);
+            const title = document.createElement('p');
+            title.textContent = result.text;
+            title.classList.add('text')
+            div.appendChild(title);
+
+            title.text = result.text;
+            title.classList.add('text')
+            div.classList.add('col')
+            dataContainer.appendChild(div);
+        }
+        getdata(getid)
+
+
+    </script>
+</body>
+
+</html>
